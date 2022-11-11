@@ -53,6 +53,11 @@ print("Total Number of Columns:",columns_count)
 print("Total Number of Cells:",total_cells_count)
 print("Total Number of Missing Value Cells:",total_missing_cells_count)
 print("Percentage of Missing Value Cells :",current_percentage_of_missing_values)
+
+if(current_percentage_of_missing_values > percentage):
+    print("Missing Values are Overfilled !!!")
+    sys.exit(0)
+
 print("Expected Percentage of Missing Value Cells :",percentage)
 print("Number of Cells to be Updated :",number_of_cells_to_be_updated)
 
