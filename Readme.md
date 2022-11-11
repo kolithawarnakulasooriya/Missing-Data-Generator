@@ -19,3 +19,14 @@ This script will generate a data set from the base data set for a certain percen
 
 example 
 `python imputation.py -if input.csv -of out.csv -p 20`
+
+### list missing value result of a file
+
+```
+ python imputation.py 
+    -if <input csv file> 
+    -l
+```
+
+example 
+`python imputation.py -if input.csv -l`
