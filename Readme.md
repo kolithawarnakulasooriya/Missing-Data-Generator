@@ -15,6 +15,7 @@ This script will generate a data set from the base data set for a certain percen
     -if <input csv file> 
     -of <output csv file> 
     -p <percentage>
+    -sc <Skip columns>
 ```
 
 example 

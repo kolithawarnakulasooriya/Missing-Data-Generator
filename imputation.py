@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-if", "--inputfile", dest = "inputfile", help="Input File as Csv")
 parser.add_argument("-of", "--outputfile", dest = "outputfile", help="Output File as Csv")
 parser.add_argument("-p", "--percentage", dest = "percentage", default = 10, help="Percentage")
+parser.add_argument("-sc", "--skip-columns", dest = "sc", default = "1", help="Skip Columns")
 parser.add_argument("-l", "--list", dest='list', action='store_true', help= "List")
 
 args = parser.parse_args()
@@ -20,7 +21,7 @@ if(args.inputfile == None):
     sys.exit(0)
 filepath = args.inputfile
 
-df = pd.read_csv(filepath)
+df = pd.read_csv(filepath, low_memory=False)
 
 rows_count = len(df)
 columns_count = len(df.columns)
@@ -33,6 +34,9 @@ print("Total Number of Columns:",columns_count)
 print("Total Number of Cells:",total_cells_count)
 print("Total Number of Missing Value Cells:",total_missing_cells_count)
 print("Percentage of Missing Value Cells :",current_percentage_of_missing_values,"%")
+print(df.describe())
+
+print(df.head())
 
 if(args.list is True):
     sys.exit(0)
@@ -68,19 +72,21 @@ print("Number of Cells to be Updated :",number_of_cells_to_be_updated)
 copied_df = df.copy(deep=True)
 copied_total_cells = copied_df.count().sum()
 
+sc = int(args.sc)
+
 while(True):
     copied_total_missing_cells = copied_df.isnull().sum().sum()
-    copied_percentage = round(copied_total_missing_cells/copied_total_cells * 100,2)
+    copied_percentage = copied_total_missing_cells/copied_total_cells * 100
     
     if(copied_percentage > percentage):
         break;
 
     rand_row = randint(1,rows_count-1)
-    rand_column = randint(1,columns_count-1)
+    rand_column = randint(sc,columns_count-1)
 
     if(pd.isnull(copied_df.iloc[rand_row,rand_column]) is not True):
         print("\r Missing Value Updated [Row:",rand_row, "\tColumn:",rand_column,"]\t Total Missing Cells:",copied_total_missing_cells,"\t Percentage (",copied_percentage,")")
-        copied_df.iat[rand_row,rand_column] = np.nan
+        copied_df.iat[rand_row,rand_column] = None
 
 
 print("Process Completed, Output file will be saved on [",output_file_name,"]")
