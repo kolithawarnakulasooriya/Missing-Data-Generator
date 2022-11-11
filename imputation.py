@@ -76,7 +76,7 @@ while(True):
         break;
 
     rand_row = randint(1,rows_count-1)
-    rand_column = randint(0,columns_count-1)
+    rand_column = randint(1,columns_count-1)
 
     if(pd.isnull(copied_df.iloc[rand_row,rand_column]) is not True):
         print("\r Missing Value Updated [Row:",rand_row, "\tColumn:",rand_column,"]\t Total Missing Cells:",copied_total_missing_cells,"\t Percentage (",copied_percentage,")")
